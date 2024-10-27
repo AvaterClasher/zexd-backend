@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - C:\Users\KIIT\Desktop\postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=moni
+      - POSTGRES_USER=moni
+      - POSTGRES_DB=moni_db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
