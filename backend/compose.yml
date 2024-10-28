@@ -1,17 +1,26 @@
 services:
-  postgres:
-    image: postgres:16-alpine
-    ports:
-      - "5432:5432"
-    volumes:
-      - C:\Users\KIIT\Desktop\postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=moni
-      - POSTGRES_USER=moni
-      - POSTGRES_DB=moni_db
-    networks:
-      - app-network
+    postgres:
+        image: postgres:16-alpine
+        ports:
+            - "5432:5432"
+        volumes:
+            - C:\Users\KIIT\Desktop\postgres_data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=moni
+            - POSTGRES_USER=moni
+            - POSTGRES_DB=moni_db
+        networks:
+            - app-network
+            
+    dragonflydb:
+        image: docker.dragonflydb.io/dragonflydb/dragonfly
+        ulimits:
+            memlock: -1
+        ports:
+            - "6379:6379"
+        networks:
+            - app-network
 
 networks:
-  app-network:
-    driver: bridge
+    app-network:
+        driver: bridge
