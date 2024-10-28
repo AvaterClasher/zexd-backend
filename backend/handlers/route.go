@@ -12,6 +12,7 @@ func New() http.Handler {
 
 	mainRouter.HandleFunc("/{shortenedUrl}", RedirectHandler)
 	mainRouter.HandleFunc("/api/create", CreateUrlHandler).Methods("POST", "OPTIONS")
+	mainRouter.HandleFunc("/api/list/{user_id}", ListUrlsForUidHandler).Methods("GET", "OPTIONS")
 
 	return route
 }
