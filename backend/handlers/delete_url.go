@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"errors"
 	"log"
 	"net/http"
 	"zexd/services"
@@ -21,9 +22,15 @@ func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := services.UrlDelete(input.Url); err != nil {
-		log.Println("Error deleting URL:", err)
-		http.Error(w, "Could not delete the URL", http.StatusInternalServerError)
+	err := services.UrlDelete(input.Url)
+	if err != nil {
+		if errors.Is(err, errors.New("URL does not exist")) {
+			log.Println("URL does not exist:", input.Url)
+			http.Error(w, "URL does not exist", http.StatusNotFound)
+		} else {
+			log.Println("Error deleting URL:", err)
+			http.Error(w, "Could not delete the URL", http.StatusInternalServerError)
+		}
 		return
 	}
 
