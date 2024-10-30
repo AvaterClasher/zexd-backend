@@ -3,12 +3,14 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"os"
+	"zexd/logger"
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
+
+var log = logger.NewLogger()
 
 func init() {
 	if err := godotenv.Load(".env"); err != nil {
@@ -16,13 +18,11 @@ func init() {
 	}
 }
 
-var db *sql.DB
-
 func CreateCon() *sql.DB {
 	var (
-		dbHost, _  = os.LookupEnv("DB_HOST")
+		dbHost, _     = os.LookupEnv("DB_HOST")
 		dbPort, _     = os.LookupEnv("DB_PORT")
-		dbUser, _  = os.LookupEnv("DB_USER")
+		dbUser, _     = os.LookupEnv("DB_USER")
 		dbPassword, _ = os.LookupEnv("DB_PASSWORD")
 		dbName, _     = os.LookupEnv("DB_NAME")
 	)
@@ -37,6 +37,6 @@ func CreateCon() *sql.DB {
 	if err = db.Ping(); err != nil {
 		log.Fatal("Failed to ping the database: ", err)
 	}
-	log.Println("Connected to PostgreSQL!")
+	log.Info("Connected to PostgreSQL!")
 	return db
 }
