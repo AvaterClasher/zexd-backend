@@ -8,6 +8,13 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// RedirectHandler godoc
+// @Summary Redirect to the original URL from a shortened URL
+// @Param   shortenedUrl  path     string  true  "Shortened URL code"
+// @Success 302           {string} string  "Redirects to the original URL"
+// @Failure 400           {string} string  "Shortened URL is required"
+// @Failure 404           {string} string  "URL not found"
+// @Router /{shortenedUrl} [get]
 func RedirectHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	shortenedUrl := vars["shortenedUrl"]

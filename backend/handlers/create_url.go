@@ -18,6 +18,15 @@ type shortenedUrlResponse struct {
 	ShortenedUrl string `json:"shortened_url"`
 }
 
+// CreateUrlHandler godoc
+// @Summary Shorten a URL
+// @Accept  json
+// @Produce  json
+// @Param   input  body      inputUrl  true  "URL and User ID"
+// @Success 200     {object} shortenedUrlResponse
+// @Failure 400     {string} string "Invalid JSON format or missing fields"
+// @Failure 500     {string} string "Internal Server Error"
+// @Router /api/create [post]
 func CreateUrlHandler(w http.ResponseWriter, r *http.Request) {
 	var input inputUrl
 	reqBody, err := io.ReadAll(r.Body)

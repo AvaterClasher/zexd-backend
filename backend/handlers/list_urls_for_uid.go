@@ -10,6 +10,14 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// ListUrlsForUidHandler godoc
+// @Summary List URLs for a specific user ID
+// @Produce  json
+// @Param   user_id  path     string  true  "User ID"
+// @Success 200      {array}  string  "List of URLs for the user"
+// @Failure 400      {string} string  "User ID is required"
+// @Failure 500      {string} string  "Internal Server Error"
+// @Router /api/list/{user_id} [get]
 func ListUrlsForUidHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	user_id := vars["user_id"]

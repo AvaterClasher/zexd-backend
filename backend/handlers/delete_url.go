@@ -8,8 +8,23 @@ import (
 	"zexd/services"
 )
 
+type inputDelUrl struct {
+	Url string `json:"url"` // URL to delete
+}
+
+
+// DeleteHandler godoc
+// @Summary Delete a shortened URL
+// @Accept  json
+// @Produce  json
+// @Param   input  body      inputDelUrl  true  "URL to delete"
+// @Success 200     {object} map[string]string "Success message"
+// @Failure 400     {string} string "URL field is required"
+// @Failure 404     {string} string "URL does not exist"
+// @Failure 500     {string} string "Internal Server Error"
+// @Router /api/delete [post]
 func DeleteHandler(w http.ResponseWriter, r *http.Request) {
-	var input inputUrl
+	var input inputDelUrl
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
 		log.Println("Error decoding request body:", err)
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
