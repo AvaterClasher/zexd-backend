@@ -97,6 +97,7 @@ func New() http.Handler {
 
 	mainRouter := route.PathPrefix("/").Subrouter()
 	mainRouter.Use(CORSMiddleware)
+	mainRouter.Use(hist.PrometheusMonitoring)
 
 	mainRouter.PathPrefix("/swagger/").Handler(httpSwagger.Handler(
 		httpSwagger.URL("http://localhost:8080/swagger/doc.json"),
