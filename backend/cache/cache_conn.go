@@ -2,14 +2,16 @@ package cache
 
 import (
 	"context"
-	"log"
 	"os"
+	"zexd/logger"
 
-	redis "github.com/redis/go-redis/v9"
 	"github.com/joho/godotenv"
+	redis "github.com/redis/go-redis/v9"
 )
 
 var Ctx = context.Background()
+
+var log = logger.NewLogger()
 
 func init() {
 	envFile := ".env"
@@ -20,9 +22,9 @@ func init() {
 
 func tryRedis(domain string) *redis.Client {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     domain, 
-		Password: "",     
-		DB:       0,     
+		Addr:     domain,
+		Password: "",
+		DB:       0,
 	})
 
 	inputUrl := "https://soumyadipmoni.vercel.app"
@@ -31,7 +33,7 @@ func tryRedis(domain string) *redis.Client {
 	err := rdb.Set(Ctx, newUrl, inputUrl, 0).Err()
 
 	if err != nil {
-		log.Printf("Err: %v, Domain: %v", err, domain)
+		log.Error(err, "Current Domain", domain)
 		return nil
 	}
 
@@ -44,9 +46,9 @@ func CreateCon() *redis.Client {
 	client := tryRedis(cacheDomain)
 
 	if client == nil {
-		log.Println("Connection Failed while trying to connect with Redis.")
+		log.Error("Connection Failed while trying to connect with Redis.")
 	} else {
-		log.Println("Connected to Redis Container!!")
+		log.Info("Connected to Redis Container!!")
 	}
 
 	return client
