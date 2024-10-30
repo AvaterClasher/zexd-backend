@@ -1,0 +1,150 @@
+basePath: /
+definitions:
+  handlers.inputDelUrl:
+    properties:
+      url:
+        description: URL to delete
+        type: string
+    type: object
+  handlers.inputUrl:
+    properties:
+      url:
+        type: string
+      user_id:
+        type: string
+    type: object
+  handlers.shortenedUrlResponse:
+    properties:
+      shortened_url:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API for a URL Shortener Service.
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit
+  title: ZexD API
+  version: "1.0"
+paths:
+  /{shortenedUrl}:
+    get:
+      parameters:
+      - description: Shortened URL code
+        in: path
+        name: shortenedUrl
+        required: true
+        type: string
+      responses:
+        "302":
+          description: Redirects to the original URL
+          schema:
+            type: string
+        "400":
+          description: Shortened URL is required
+          schema:
+            type: string
+        "404":
+          description: URL not found
+          schema:
+            type: string
+      summary: Redirect to the original URL from a shortened URL
+  /api/create:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: URL and User ID
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.inputUrl'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.shortenedUrlResponse'
+        "400":
+          description: Invalid JSON format or missing fields
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Shorten a URL
+  /api/delete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: URL to delete
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.inputDelUrl'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success message
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: URL field is required
+          schema:
+            type: string
+        "404":
+          description: URL does not exist
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete a shortened URL
+  /api/list/{user_id}:
+    get:
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of URLs for the user
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: User ID is required
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: List URLs for a specific user ID
+  /health:
+    get:
+      description: Returns a message indicating the server is online
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Server is online
+          schema:
+            type: string
+      summary: Check if the server is online
+swagger: "2.0"
