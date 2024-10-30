@@ -2,7 +2,6 @@ package daos
 
 import (
 	"encoding/base64"
-	"log"
 	"os"
 	"strconv"
 
@@ -35,7 +34,7 @@ func GetUrlsForUid(user_id string) ([]UrlData, error) {
 		WHERE user_id = $1`
 	rows, err := db.Query(query, user_id)
 	if err != nil {
-		log.Println("Error retrieving URLs:", err)
+		log.Errorf("Error retrieving URLs for user: %v", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -43,7 +42,7 @@ func GetUrlsForUid(user_id string) ([]UrlData, error) {
 	for rows.Next() {
 		var urlData UrlData
 		if err := rows.Scan(&urlData.Uid, &urlData.URL, &urlData.Clicks); err != nil {
-			log.Println("Error scanning URL data:", err)
+			log.Errorf("Error scanning row: %v", err)
 			return nil, err
 		}
 
@@ -54,7 +53,7 @@ func GetUrlsForUid(user_id string) ([]UrlData, error) {
 	}
 
 	if err := rows.Err(); err != nil {
-		log.Println("Error iterating over rows:", err)
+		log.Errorf("Error retrieving rows: %v", err)
 		return nil, err
 	}
 
