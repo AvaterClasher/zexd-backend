@@ -2,7 +2,6 @@ package services
 
 import (
 	"encoding/base64"
-	"log"
 	"os"
 	"strconv"
 	"time"
