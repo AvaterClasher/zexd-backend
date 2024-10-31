@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 
 	"zexd/services"
@@ -26,7 +25,7 @@ func RedirectHandler(w http.ResponseWriter, r *http.Request) {
 
 	orgUrl, err := services.UrlRedirection(shortenedUrl)
 	if err != nil || orgUrl == "" {
-		log.Println("No matching URL found for redirection:", err)
+		log.Errorf("No matching URL found for redirection: %s", err)
 		http.Error(w, "URL not found", http.StatusNotFound)
 		return
 	}
