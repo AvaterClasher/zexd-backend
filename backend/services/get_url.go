@@ -15,7 +15,7 @@ var log = logger.NewLogger()
 func UrlRedirection(shortenedUrl string) (string, error) {
 	inputUrl, err := rdb.Get(ctx, shortenedUrl).Result()
 	if err == nil {
-		log.Infof("Shortened URL found in cache: %s", inputUrl)
+		// log.Infof("Shortened URL found in cache: %s", inputUrl)
 		encodedPart := shortenedUrl[strings.LastIndex(shortenedUrl, "/")+1:]
 		byteNumber, _ := base64.StdEncoding.DecodeString(encodedPart)
 		uid, _ := strconv.Atoi(string(byteNumber))
