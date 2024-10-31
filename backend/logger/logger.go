@@ -35,7 +35,7 @@ func init() {
         SetString("HTTP").
         Padding(0, 1, 0, 1).
         Background(lipgloss.Color("12")).  
-        Foreground(lipgloss.Color("0"))
+        Foreground(lipgloss.Color("15"))
 }
 
 func NewLogger() *log.Logger {
