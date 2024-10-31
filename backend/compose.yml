@@ -11,12 +11,13 @@ services:
         environment:
             DB_HOST: postgres
             DB_PORT: 5432
-            DB_USER: admin
-            DB_PASSWORD: admin
+            DB_USER: zexd
+            DB_PASSWORD: zexd
             DB_NAME: zexd_db
             TABLE_NAME: shortened_url
             EXPIRY_TIME: 1440
             REDIS_DOMAIN: dragonflydb:6379
+            REDIS_PASSWORD:
             SERVER_DOMAIN: http://localhost:8080/
         networks:
             - app-network
@@ -29,8 +30,8 @@ services:
         volumes:
             - postgres_data:/var/lib/postgresql/data
         environment:
-            - POSTGRES_PASSWORD=admin
-            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=zexd
+            - POSTGRES_USER=zexd
             - POSTGRES_DB=zexd_db
         networks:
             - app-network
