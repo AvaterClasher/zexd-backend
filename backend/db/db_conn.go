@@ -31,11 +31,11 @@ func CreateCon() *sql.DB {
 
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		log.Fatal("Failed to open a connection: ", err)
+		log.Fatalf("Failed to open a connection: %s", err)
 	}
 
 	if err = db.Ping(); err != nil {
-		log.Fatal("Failed to ping the database: ", err)
+		log.Fatalf("Failed to ping the database: %s", err)
 	}
 	log.Info("Connected to PostgreSQL!")
 	return db
