@@ -14,7 +14,7 @@ var log = logger.NewLogger()
 
 func init() {
 	if err := godotenv.Load(".env"); err != nil {
-		log.Error("Error: No .env file found")
+		log.Warn("Error: No .env file found")
 	}
 }
 
@@ -26,7 +26,7 @@ func CreateCon() *sql.DB {
 		dbPassword, _ = os.LookupEnv("DB_PASSWORD")
 		dbName, _     = os.LookupEnv("DB_NAME")
 	)
-	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=allow",
 		dbHost, dbPort, dbUser, dbPassword, dbName)
 
 	db, err := sql.Open("postgres", connStr)
