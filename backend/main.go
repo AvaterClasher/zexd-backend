@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"zexd/logger"
 	"net/http"
 	"zexd/handlers"
 	"zexd/services"
@@ -9,8 +9,10 @@ import (
 	"github.com/jasonlvhit/gocron"
 )
 
+var log = logger.NewLogger()
+
 func executeCronJob() {
-	log.Println("**Executing Cron Service**")
+	log.Infof("**Executing Cron Service**")
 	gocron.Every(60).Minute().Do(services.RemoveExpiredEntries)
 	<-gocron.Start()
 }
@@ -22,11 +24,10 @@ func main() {
 	}
 
 	go executeCronJob()
-
-	log.Printf("Starting server on %s", server.Addr)
+	log.Infof("Starting server on %s", server.Addr)
 	if err := server.ListenAndServe(); err != http.ErrServerClosed {
-		log.Printf("%s", err)
+		log.Errorf("%s", err)
 	} else {
-		log.Printf("Server Closed")
+		log.Warnf("Server Closed")
 	}
 }
