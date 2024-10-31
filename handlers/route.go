@@ -67,7 +67,7 @@ var (
 // @license.name MIT
 // @license.url https://opensource.org/license/mit
 
-// @host https://zexd.onrender.com
+// @host zexd.onrender.com
 // @BasePath /
 func New() http.Handler {
 	route := mux.NewRouter()
