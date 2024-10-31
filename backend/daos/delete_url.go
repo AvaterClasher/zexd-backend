@@ -1,8 +1,6 @@
 package daos
 
 import (
-	"fmt"
-
 	_ "github.com/lib/pq"
 )
 
@@ -20,6 +18,6 @@ func DeleteUrl(uid int) error {
 		return err
 	}
 
-	fmt.Printf("Deleted %v url(s)\n", deletedCount)
+	log.Infof("Deleted %v url(s)\n", deletedCount)
 	return nil
 }
