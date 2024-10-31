@@ -1,7 +1,6 @@
 package services
 
 import (
-	"log"
 	"os"
 	"strconv"
 	"time"
@@ -22,11 +21,11 @@ func init() {
 		if parsedExpTime, err := strconv.Atoi(expTimeStr); err == nil {
 			exp_time = parsedExpTime
 		} else {
-			log.Println("Invalid EXPIRY_TIME value, defaulting to 60 minutes")
+			log.Error("Invalid EXPIRY_TIME value, defaulting to 60 minutes")
 			exp_time = 60
 		}
 	} else {
-		log.Println("EXPIRY_TIME not set, defaulting to 60 minutes")
+		log.Error("EXPIRY_TIME not set, defaulting to 60 minutes")
 		exp_time = 60
 	}
 }
@@ -34,8 +33,8 @@ func init() {
 func RemoveExpiredEntries() {
 	expiryThreshold := time.Now().Add(-time.Duration(exp_time) * time.Minute)
 	if err := daos.DeleteExpiredUrls(expiryThreshold); err != nil {
-		log.Println("Error deleting expired URLs:", err)
+		log.Errorf("Error deleting expired URLs: %s", err)
 	} else {
-		log.Println("Expired URLs successfully deleted.")
+		log.Error("Expired URLs successfully deleted.")
 	}
 }
