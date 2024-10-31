@@ -3,7 +3,6 @@ package handlers
 import (
 	"encoding/json"
 	"errors"
-	"log"
 	"net/http"
 	"zexd/services"
 )
@@ -26,13 +25,13 @@ type inputDelUrl struct {
 func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 	var input inputDelUrl
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
-		log.Println("Error decoding request body:", err)
+		log.Errorf("Error decoding request body: %s", err)
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
 
 	if input.Url == "" {
-		log.Println("URL field is empty in request body")
+		log.Error("URL field is empty in request body")
 		http.Error(w, "URL field is required", http.StatusBadRequest)
 		return
 	}
@@ -40,10 +39,10 @@ func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 	err := services.UrlDelete(input.Url)
 	if err != nil {
 		if errors.Is(err, errors.New("URL does not exist")) {
-			log.Println("URL does not exist:", input.Url)
+			log.Errorf("URL does not exist: %s", input.Url)
 			http.Error(w, "URL does not exist", http.StatusNotFound)
 		} else {
-			log.Println("Error deleting URL:", err)
+			log.Errorf("Error deleting URL: %s", err)
 			http.Error(w, "Could not delete the URL", http.StatusInternalServerError)
 		}
 		return
@@ -53,7 +52,7 @@ func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(response); err != nil {
-		log.Println("Error encoding JSON response:", err)
+		log.Errorf("Error encoding JSON response: %s", err)
 		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
 	}
 }
