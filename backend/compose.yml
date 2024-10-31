@@ -4,7 +4,7 @@ services:
         ports:
             - "5432:5432"
         volumes:
-            - C:\Users\KIIT\Desktop\postgres_data:/var/lib/postgresql/data
+            - postgres_data:/var/lib/postgresql/data
         environment:
             - POSTGRES_PASSWORD=moni
             - POSTGRES_USER=moni
@@ -63,3 +63,4 @@ networks:
 volumes:
     prometheus_data:
     grafana_data:
+    postgres_data:
