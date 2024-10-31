@@ -26,7 +26,8 @@ func CreateCon() *sql.DB {
 		dbPassword, _ = os.LookupEnv("DB_PASSWORD")
 		dbName, _     = os.LookupEnv("DB_NAME")
 	)
-	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=allow",
+	// Have to do something about the sslmode for dev and docker postgres
+	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=require",
 		dbHost, dbPort, dbUser, dbPassword, dbName)
 
 	db, err := sql.Open("postgres", connStr)
