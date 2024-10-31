@@ -13,7 +13,7 @@ var styles = log.DefaultStyles()
 
 func init() {
     styles.Levels[log.ErrorLevel] = lipgloss.NewStyle().
-        SetString("ERROR!!").
+        SetString("ERROR").
         Padding(0, 1, 0, 1).
         Background(lipgloss.Color("204")).
         Foreground(lipgloss.Color("0"))
