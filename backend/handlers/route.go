@@ -10,7 +10,8 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
-
+	
+	middleware "zexd/middleware"
 	_ "zexd/docs"
 )
 
@@ -60,21 +61,6 @@ func FloatToString(inputNum float64) string {
 	return strconv.FormatFloat(inputNum, 'f', 6, 64)
 }
 
-func CORSMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-
-		if r.Method == "OPTIONS" {
-			w.WriteHeader(http.StatusOK)
-			return
-		}
-
-		next.ServeHTTP(w, r)
-	})
-}
-
 // Swagger Info
 // @title ZexD API
 // @version 1.0
@@ -96,8 +82,9 @@ func New() http.Handler {
 	route.HandleFunc("/health", HealthCheckHandler)
 
 	mainRouter := route.PathPrefix("/").Subrouter()
-	mainRouter.Use(CORSMiddleware)
+	mainRouter.Use(middleware.CORSMiddleware)
 	mainRouter.Use(hist.PrometheusMonitoring)
+	mainRouter.Use(middleware.LogMiddleware)
 
 	mainRouter.PathPrefix("/swagger/").Handler(httpSwagger.Handler(
 		httpSwagger.URL("http://localhost:8080/swagger/doc.json"),
