@@ -3,11 +3,13 @@ package handlers
 import (
 	"encoding/json"
 	"io"
-	"log"
+	"zexd/logger"
 	"net/http"
 
 	"zexd/services"
 )
+
+var log = logger.NewLogger()
 
 type inputUrl struct {
 	Url     string `json:"url"`
@@ -32,25 +34,25 @@ func CreateUrlHandler(w http.ResponseWriter, r *http.Request) {
 	reqBody, err := io.ReadAll(r.Body)
 
 	if err != nil {
-		log.Println("Encountered an error while reading request body")
+		log.Error("Encountered an error while reading request body")
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
 		return
 	}
 
 	if err := json.Unmarshal(reqBody, &input); err != nil {
-		log.Println("Error unmarshalling JSON", err)
+		log.Error("Error unmarshalling JSON", err)
 		http.Error(w, "Invalid JSON format", http.StatusBadRequest)
 		return
 	}
 
 	if input.Url == "" {
-		log.Println("Url is empty")
+		log.Error("Url is empty")
 		http.Error(w, "Url is empty", http.StatusBadRequest)
 		return
 	}
 
 	if input.User_id == "" {
-		log.Println("User_id is empty")
+		log.Error("User_id is empty")
 		http.Error(w, "User_id is empty", http.StatusBadRequest)
 		return
 	}
@@ -61,7 +63,7 @@ func CreateUrlHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(response); err != nil {
-		log.Println("Error encoding response", err)
+		log.Errorf("Error encoding response: %s", err)
 		http.Error(w, "Could not encode response", http.StatusInternalServerError)
 	}
 }
