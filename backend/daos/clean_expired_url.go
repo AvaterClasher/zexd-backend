@@ -20,6 +20,6 @@ func DeleteExpiredUrls(expiryThreshold time.Time) error {
 		return err
 	}
 
-	log.Printf("Deleted %d expired URL(s)\n", deletedCount)
+	log.Infof("Deleted %d expired URL(s)\n", deletedCount)
 	return nil
 }
