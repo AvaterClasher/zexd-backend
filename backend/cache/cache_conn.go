@@ -16,7 +16,7 @@ var log = logger.NewLogger()
 func init() {
 	envFile := ".env"
 	if err := godotenv.Load(envFile); err != nil {
-		log.Fatalf("Error: No Environment File Found, cache_connection.go %v", err)
+		log.Errorf("Error: No Environment File Found, cache_connection.go %v", err)
 	}
 }
 

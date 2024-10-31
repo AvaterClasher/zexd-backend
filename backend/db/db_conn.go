@@ -14,7 +14,7 @@ var log = logger.NewLogger()
 
 func init() {
 	if err := godotenv.Load(".env"); err != nil {
-		log.Fatal("Error: No .env file found")
+		log.Error("Error: No .env file found")
 	}
 }
 
