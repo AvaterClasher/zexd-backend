@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"zexd/services"
@@ -29,7 +28,7 @@ func ListUrlsForUidHandler(w http.ResponseWriter, r *http.Request) {
 
 	urls, err := services.ListUrlForUid(user_id)
 	if err != nil {
-		log.Println("Error fetching URLs for user ID:", err)
+		log.Errorf("Error fetching URLs for user ID: %s", err)
 		http.Error(w, "Error fetching URLs for user ID", http.StatusInternalServerError)
 		return
 	}
@@ -37,7 +36,7 @@ func ListUrlsForUidHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(urls); err != nil {
-		log.Println("Error encoding response", err)
+		log.Errorf("Error encoding response: %s", err)
 		http.Error(w, "Could not encode response", http.StatusInternalServerError)
 	}
 }
