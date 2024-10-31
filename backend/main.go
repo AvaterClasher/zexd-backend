@@ -12,7 +12,7 @@ import (
 var log = logger.NewLogger()
 
 func executeCronJob() {
-	log.Infof("**Executing Cron Service**")
+	log.Infof("Executing Cron Service")
 	gocron.Every(60).Minute().Do(services.RemoveExpiredEntries)
 	<-gocron.Start()
 }
