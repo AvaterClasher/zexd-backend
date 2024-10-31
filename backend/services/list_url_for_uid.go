@@ -1,7 +1,6 @@
 package services
 
 import (
-	"log"
 	"zexd/daos"
 )
 
@@ -12,7 +11,7 @@ func ListUrlForUid(uid string) ([]UrlData, error) {
 	urls, err := daos.GetUrlsForUid(uid)
 
 	if err != nil {
-		log.Println("Error in getting URL from database", err)
+		log.Errorf("Error fetching URLs for user ID: %s", err)
 		return nil, err
 	}
 
