@@ -38,7 +38,7 @@ func CreateShortenedUrl(inputUrl string, user_id string) string {
 
 	err = rdb.Set(ctx, tempUrl, inputUrl, time.Duration(exp_time)*time.Minute).Err()
 	if err != nil {
-		log.Printf("Error in setting Redis value: %v", err)
+		log.Errorf("Error in setting Redis value: %v", err)
 	}
 
 	return newUrl
