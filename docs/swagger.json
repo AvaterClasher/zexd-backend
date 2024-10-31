@@ -10,7 +10,7 @@
         },
         "version": "1.0"
     },
-    "host": "https://zexd.onrender.com",
+    "host": "zexd.onrender.com",
     "basePath": "/",
     "paths": {
         "/api/create": {

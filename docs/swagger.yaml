@@ -18,7 +18,7 @@ definitions:
       shortened_url:
         type: string
     type: object
-host: https://zexd.onrender.com
+host: zexd.onrender.com
 info:
   contact: {}
   description: API for a URL Shortener Service.
