@@ -67,7 +67,7 @@ var (
 // @license.name MIT
 // @license.url https://opensource.org/license/mit
 
-// @host localhost:8080
+// @host https://zexd.onrender.com
 // @BasePath /
 func New() http.Handler {
 	route := mux.NewRouter()
@@ -84,7 +84,7 @@ func New() http.Handler {
 	mainRouter.Use(middleware.LogMiddleware)
 
 	mainRouter.PathPrefix("/swagger/").Handler(httpSwagger.Handler(
-		httpSwagger.URL("http://localhost:8080/swagger/doc.json"),
+		httpSwagger.URL("https://zexd.onrender.com/swagger/doc.json"),
 		httpSwagger.DeepLinking(true),
 		httpSwagger.DocExpansion("none"),
 		httpSwagger.DomID("swagger-ui"),
