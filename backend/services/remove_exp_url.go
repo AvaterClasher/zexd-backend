@@ -6,16 +6,11 @@ import (
 	"time"
 
 	"zexd/daos"
-	"github.com/joho/godotenv"
 )
 
 var exp_time int
 
 func init() {
-	if err := godotenv.Load(".env"); err != nil {
-		log.Fatal("Error loading env file for dbPurging Service")
-	}
-
 	expTimeStr, exists := os.LookupEnv("EXPIRY_TIME")
 	if exists {
 		if parsedExpTime, err := strconv.Atoi(expTimeStr); err == nil {
