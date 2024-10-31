@@ -1,4 +1,27 @@
 services:
+    zexd:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8080:8080"               
+        depends_on:
+            - postgres
+            - dragonflydb
+        environment:
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_USER: admin
+            DB_PASSWORD: admin
+            DB_NAME: zexd_db
+            TABLE_NAME: shortened_url
+            EXPIRY_TIME: 1440
+            REDIS_DOMAIN: dragonflydb:6379
+            SERVER_DOMAIN: http://localhost:8080/
+        networks:
+            - app-network
+            - monitoring
+
     postgres:
         image: postgres:16-alpine
         ports:
@@ -6,9 +29,9 @@ services:
         volumes:
             - postgres_data:/var/lib/postgresql/data
         environment:
-            - POSTGRES_PASSWORD=moni
-            - POSTGRES_USER=moni
-            - POSTGRES_DB=moni_db
+            - POSTGRES_PASSWORD=admin
+            - POSTGRES_USER=admin
+            - POSTGRES_DB=zexd_db
         networks:
             - app-network
 
