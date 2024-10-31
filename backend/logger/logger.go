@@ -17,7 +17,7 @@ func init() {
         SetString("ERROR").
         Padding(0, 1, 0, 1).
         Background(lipgloss.Color("204")).
-        Foreground(lipgloss.Color("0"))
+        Foreground(lipgloss.Color("15"))
 
     styles.Levels[log.InfoLevel] = lipgloss.NewStyle().
         SetString("INFO").
@@ -29,7 +29,13 @@ func init() {
         SetString("WARNING").
         Padding(0, 1, 0, 1).
         Background(lipgloss.Color("214")). 
-        Foreground(lipgloss.Color("0"))
+        Foreground(lipgloss.Color("15"))
+
+    styles.Levels[log.FatalLevel] = lipgloss.NewStyle().
+        SetString("FATAL").
+        Padding(0, 1, 0, 1).
+        Background(lipgloss.Color("#7F00FF")).
+        Foreground(lipgloss.Color("15"))
 
     stylesForHttp.Levels[log.InfoLevel] = lipgloss.NewStyle().
         SetString("HTTP").
