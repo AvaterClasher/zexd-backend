@@ -20,10 +20,10 @@ func init() {
 	}
 }
 
-func tryRedis(domain string) *redis.Client {
+func tryRedis(domain, password string) *redis.Client {
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     domain,
-		Password: "",
+		Password: password,
 		DB:       0,
 	})
 
@@ -42,8 +42,9 @@ func tryRedis(domain string) *redis.Client {
 
 func CreateCon() *redis.Client {
 	var cacheDomain = os.Getenv("REDIS_DOMAIN")
+	var cachePassword = os.Getenv("REDIS_PASSWORD")
 
-	client := tryRedis(cacheDomain)
+	client := tryRedis(cacheDomain, cachePassword)
 
 	if client == nil {
 		log.Error("Connection Failed while trying to connect with Redis.")
