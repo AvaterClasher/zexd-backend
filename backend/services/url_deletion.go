@@ -3,7 +3,6 @@ package services
 import (
 	"encoding/base64"
 	"errors"
-	"log"
 	"strconv"
 	"strings"
 	"zexd/daos"
@@ -17,7 +16,7 @@ func UrlDelete(shortenedUrl string) error {
 
 	exists, err := rdb.Exists(ctx, encodedPart).Result()
 	if err != nil {
-		log.Println("Error checking Redis for URL existence:", err)
+		log.Errorf("Error checking Redis for URL existence: %s", err)
 		return err
 	}
 
@@ -33,7 +32,7 @@ func UrlDelete(shortenedUrl string) error {
 
 	err = rdb.Del(ctx, encodedPart).Err()
 	if err != nil {
-		log.Println("Error in deletion from Redis:", err)
+		log.Errorf("Error in deletion from Redis: %s", err)
 	}
 
 	return daos.DeleteUrl(uid)
