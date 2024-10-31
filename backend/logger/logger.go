@@ -10,6 +10,7 @@ import (
 )
 
 var styles = log.DefaultStyles()
+var stylesForHttp = log.DefaultStyles()
 
 func init() {
     styles.Levels[log.ErrorLevel] = lipgloss.NewStyle().
@@ -30,17 +31,27 @@ func init() {
         Background(lipgloss.Color("214")). 
         Foreground(lipgloss.Color("0"))
 
-    styles.Levels[log.DebugLevel] = lipgloss.NewStyle().
-        SetString("DEBUG").
+    stylesForHttp.Levels[log.InfoLevel] = lipgloss.NewStyle().
+        SetString("HTTP").
         Padding(0, 1, 0, 1).
-        Background(lipgloss.Color("33")).  
-        Foreground(lipgloss.Color("15"))
+        Background(lipgloss.Color("12")).  
+        Foreground(lipgloss.Color("0"))
 }
 
 func NewLogger() *log.Logger {
     logger := log.New(os.Stderr)
 
     logger.SetStyles(styles)
+    logger.SetReportTimestamp(true)
+    logger.SetTimeFormat(time.Stamp)
+
+    return logger
+}
+
+func NewLoggerforHttp() *log.Logger {
+    logger := log.New(os.Stdout)
+
+    logger.SetStyles(stylesForHttp)
     logger.SetReportTimestamp(true)
     logger.SetTimeFormat(time.Stamp)
 
