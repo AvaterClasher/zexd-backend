@@ -84,7 +84,7 @@ func New() http.Handler {
 	mainRouter.Use(middleware.LogMiddleware)
 
 	mainRouter.PathPrefix("/swagger/").Handler(httpSwagger.Handler(
-		httpSwagger.URL("https://zexd.onrender.com/swagger/doc.json"),
+		httpSwagger.URL("zexd.onrender.com/swagger/doc.json"),
 		httpSwagger.DeepLinking(true),
 		httpSwagger.DocExpansion("none"),
 		httpSwagger.DomID("swagger-ui"),
