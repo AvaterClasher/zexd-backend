@@ -14,11 +14,11 @@ var (
 	log = logger.NewLogger()
 	db  *sql.DB
 	config = struct {
-		host, port, user, password, dbname string
+		host, port, user, password, dbname, dbssl string
 	}{}
 )
 
-var envVars = []string{"DB_HOST", "DB_PORT", "DB_USER", "DB_PASSWORD", "DB_NAME"}
+var envVars = []string{"DB_HOST", "DB_PORT", "DB_USER", "DB_PASSWORD", "DB_NAME", "DB_SSL"}
 
 func init() {
 	loadEnv()
@@ -42,8 +42,9 @@ func initializeConfig() {
 	config.user = os.Getenv("DB_USER")
 	config.password = os.Getenv("DB_PASSWORD")
 	config.dbname = os.Getenv("DB_NAME")
+	config.dbssl = os.Getenv("DB_SSL")
 
-	for i, value := range []string{config.host, config.port, config.user, config.password, config.dbname} {
+	for i, value := range []string{config.host, config.port, config.user, config.password, config.dbname, config.dbssl} {
 		if value == "" {
 			log.Warn(fmt.Sprintf("Warning: Required environment variable %s is not set", envVars[i]))
 		}
@@ -51,8 +52,8 @@ func initializeConfig() {
 }
 
 func CreateCon() *sql.DB {
-	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=require",
-		config.host, config.port, config.user, config.password, config.dbname)
+	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
+		config.host, config.port, config.user, config.password, config.dbname, config.dbssl)
 
 	var err error
 	if db, err = sql.Open("postgres", connStr); err != nil {
