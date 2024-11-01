@@ -1,0 +1,102 @@
+services:
+    zexd:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8080:8080"
+        depends_on:
+            postgres:
+                condition: service_healthy
+            dragonflydb:
+                condition: service_healthy
+        environment:
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_USER: zexd
+            DB_PASSWORD: zexd
+            DB_NAME: zexd_db
+            DB_SSL: disable
+            TABLE_NAME: shortened_url
+            EXPIRY_TIME: 1440
+            REDIS_DOMAIN: redis://user@dragonflydb:6379/
+            SERVER_DOMAIN: http://localhost:8080/
+        networks:
+            - app-network
+            - monitoring
+
+    postgres:
+        image: postgres:16-alpine
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=zexd
+            - POSTGRES_USER=zexd
+            - POSTGRES_DB=zexd_db
+        networks:
+            - app-network
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U zexd"]
+            interval: 3s
+            timeout: 3s
+            retries: 3
+
+    dragonflydb:
+        image: docker.dragonflydb.io/dragonflydb/dragonfly
+        ulimits:
+            memlock: -1
+        ports:
+            - "6379:6379"
+        networks:
+            - app-network
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 3s
+            timeout: 3s
+            retries: 3
+
+    prometheus:
+        image: prom/prometheus:latest
+        container_name: prometheus
+        ports:
+            - "9090:9090"
+        volumes:
+            - ./prometheus.yml:/etc/prometheus/prometheus.yml
+            - prometheus_data:/prometheus
+        command:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--storage.tsdb.path=/prometheus"
+            - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+            - "--web.console.templates=/usr/share/prometheus/consoles"
+        networks:
+            - app-network
+            - monitoring
+
+    grafana:
+        image: grafana/grafana:latest
+        container_name: grafana
+        ports:
+            - "3000:3000"
+        volumes:
+            - grafana_data:/var/lib/grafana
+        depends_on:
+            - prometheus        
+        networks:
+            - monitoring
+        environment:
+            - GF_SECURITY_ADMIN_PASSWORD=admin
+            - GF_SECURITY_ADMIN_USER=admin
+            - GF_USERS_ALLOW_SIGN_UP=false
+
+networks:
+    app-network:
+        driver: bridge
+    monitoring:
+        driver: bridge
+
+volumes:
+    prometheus_data:
+    grafana_data:
+    postgres_data:
