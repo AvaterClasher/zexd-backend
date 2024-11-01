@@ -17,7 +17,6 @@ services:
             TABLE_NAME: shortened_url
             EXPIRY_TIME: 1440
             REDIS_DOMAIN: dragonflydb:6379
-            REDIS_PASSWORD:
             SERVER_DOMAIN: http://localhost:8080/
         networks:
             - app-network
