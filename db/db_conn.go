@@ -10,34 +10,59 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var log = logger.NewLogger()
+var (
+	log = logger.NewLogger()
+	db  *sql.DB
+	config = struct {
+		host, port, user, password, dbname string
+	}{}
+)
+
+var envVars = []string{"DB_HOST", "DB_PORT", "DB_USER", "DB_PASSWORD", "DB_NAME"}
 
 func init() {
-	if err := godotenv.Load(".env"); err != nil {
-		log.Warn("Error: No .env file found")
+	loadEnv()
+	initializeConfig()
+}
+
+func loadEnv() {
+	for _, env := range envVars {
+		if _, exists := os.LookupEnv(env); !exists {
+			if err := godotenv.Load(".env"); err != nil {
+				log.Warn("Error: No .env file found")
+			}
+			break
+		}
+	}
+}
+
+func initializeConfig() {
+	config.host = os.Getenv("DB_HOST")
+	config.port = os.Getenv("DB_PORT")
+	config.user = os.Getenv("DB_USER")
+	config.password = os.Getenv("DB_PASSWORD")
+	config.dbname = os.Getenv("DB_NAME")
+
+	for i, value := range []string{config.host, config.port, config.user, config.password, config.dbname} {
+		if value == "" {
+			log.Warn(fmt.Sprintf("Warning: Required environment variable %s is not set", envVars[i]))
+		}
 	}
 }
 
 func CreateCon() *sql.DB {
-	var (
-		dbHost, _     = os.LookupEnv("DB_HOST")
-		dbPort, _     = os.LookupEnv("DB_PORT")
-		dbUser, _     = os.LookupEnv("DB_USER")
-		dbPassword, _ = os.LookupEnv("DB_PASSWORD")
-		dbName, _     = os.LookupEnv("DB_NAME")
-	)
-	// Have to do something about the sslmode for dev and docker postgres
 	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=require",
-		dbHost, dbPort, dbUser, dbPassword, dbName)
+		config.host, config.port, config.user, config.password, config.dbname)
 
-	db, err := sql.Open("postgres", connStr)
-	if err != nil {
+	var err error
+	if db, err = sql.Open("postgres", connStr); err != nil {
 		log.Fatalf("Failed to open a connection: %s", err)
 	}
 
 	if err = db.Ping(); err != nil {
 		log.Fatalf("Failed to ping the database: %s", err)
 	}
+
 	log.Info("Connected to PostgreSQL!")
 	return db
 }
