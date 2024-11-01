@@ -14,6 +14,7 @@ services:
             DB_USER: zexd
             DB_PASSWORD: zexd
             DB_NAME: zexd_db
+            DB_SSL: disable
             TABLE_NAME: shortened_url
             EXPIRY_TIME: 1440
             REDIS_DOMAIN: dragonflydb:6379
