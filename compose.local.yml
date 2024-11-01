@@ -38,7 +38,7 @@ services:
         networks:
             - app-network
         healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U zexd"]
+            test: ["CMD-SHELL", "pg_isready -U zexd_db"]
             interval: 3s
             timeout: 3s
             retries: 3
