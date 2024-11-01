@@ -22,6 +22,9 @@ type shortenedUrlResponse struct {
 
 // CreateUrlHandler godoc
 // @Summary Shorten a URL
+// @Description Creates a shortened version of the provided URL
+// @Tags urls
+// @operationId createShortenedUrl
 // @Accept  json
 // @Produce  json
 // @Param   input  body      inputUrl  true  "URL and User ID"

@@ -21,11 +21,15 @@ const docTemplate = `{
     "paths": {
         "/api/create": {
             "post": {
+                "description": "Creates a shortened version of the provided URL",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "urls"
                 ],
                 "summary": "Shorten a URL",
                 "parameters": [
@@ -63,11 +67,15 @@ const docTemplate = `{
         },
         "/api/delete": {
             "post": {
+                "description": "Deletes a shortened URL",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "urls"
                 ],
                 "summary": "Delete a shortened URL",
                 "parameters": [
@@ -114,8 +122,12 @@ const docTemplate = `{
         },
         "/api/list/{user_id}": {
             "get": {
+                "description": "Returns a list of URLs for the specified user ID",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "urls"
                 ],
                 "summary": "List URLs for a specific user ID",
                 "parameters": [
@@ -158,6 +170,9 @@ const docTemplate = `{
                 "produces": [
                     "text/plain"
                 ],
+                "tags": [
+                    "health"
+                ],
                 "summary": "Check if the server is online",
                 "responses": {
                     "200": {
@@ -171,6 +186,10 @@ const docTemplate = `{
         },
         "/{shortenedUrl}": {
             "get": {
+                "description": "Redirects to the original URL from a shortened URL code",
+                "tags": [
+                    "urls"
+                ],
                 "summary": "Redirect to the original URL from a shortened URL",
                 "parameters": [
                     {

@@ -30,6 +30,7 @@ info:
 paths:
   /{shortenedUrl}:
     get:
+      description: Redirects to the original URL from a shortened URL code
       parameters:
       - description: Shortened URL code
         in: path
@@ -50,10 +51,13 @@ paths:
           schema:
             type: string
       summary: Redirect to the original URL from a shortened URL
+      tags:
+      - urls
   /api/create:
     post:
       consumes:
       - application/json
+      description: Creates a shortened version of the provided URL
       parameters:
       - description: URL and User ID
         in: body
@@ -77,10 +81,13 @@ paths:
           schema:
             type: string
       summary: Shorten a URL
+      tags:
+      - urls
   /api/delete:
     post:
       consumes:
       - application/json
+      description: Deletes a shortened URL
       parameters:
       - description: URL to delete
         in: body
@@ -110,8 +117,11 @@ paths:
           schema:
             type: string
       summary: Delete a shortened URL
+      tags:
+      - urls
   /api/list/{user_id}:
     get:
+      description: Returns a list of URLs for the specified user ID
       parameters:
       - description: User ID
         in: path
@@ -136,6 +146,8 @@ paths:
           schema:
             type: string
       summary: List URLs for a specific user ID
+      tags:
+      - urls
   /health:
     get:
       description: Returns a message indicating the server is online
@@ -147,4 +159,6 @@ paths:
           schema:
             type: string
       summary: Check if the server is online
+      tags:
+      - health
 swagger: "2.0"

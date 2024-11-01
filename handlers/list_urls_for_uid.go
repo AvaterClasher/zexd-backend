@@ -11,6 +11,9 @@ import (
 
 // ListUrlsForUidHandler godoc
 // @Summary List URLs for a specific user ID
+// @Description Returns a list of URLs for the specified user ID
+// @Tags urls
+// @operationId listUrlsForUid
 // @Produce  json
 // @Param   user_id  path     string  true  "User ID"
 // @Success 200      {array}  string  "List of URLs for the user"

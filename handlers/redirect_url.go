@@ -9,6 +9,9 @@ import (
 
 // RedirectHandler godoc
 // @Summary Redirect to the original URL from a shortened URL
+// @Description Redirects to the original URL from a shortened URL code
+// @Tags urls
+// @operationId redirectUrl
 // @Param   shortenedUrl  path     string  true  "Shortened URL code"
 // @Success 302           {string} string  "Redirects to the original URL"
 // @Failure 400           {string} string  "Shortened URL is required"

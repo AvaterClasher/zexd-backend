@@ -14,6 +14,9 @@ type inputDelUrl struct {
 
 // DeleteHandler godoc
 // @Summary Delete a shortened URL
+// @Description Deletes a shortened URL
+// @Tags urls
+// @operationId deleteShortenedUrl
 // @Accept  json
 // @Produce  json
 // @Param   input  body      inputDelUrl  true  "URL to delete"
