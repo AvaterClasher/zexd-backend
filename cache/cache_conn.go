@@ -9,44 +9,47 @@ import (
 	redis "github.com/redis/go-redis/v9"
 )
 
-var Ctx = context.Background()
-
-var log = logger.NewLogger()
+var (
+	log    = logger.NewLogger()
+	rdb    *redis.Client
+	Ctx    = context.Background()
+	domain string
+)
 
 func init() {
-	envFile := ".env"
-	if err := godotenv.Load(envFile); err != nil {
-		log.Warnf("Error: No Environment File Found, cache_connection.go %v", err)
-	}
+	loadRedisDomain()
 }
 
-func tryRedis(domain string) *redis.Client {
-	opt, _ := redis.ParseURL(domain)
-	rdb := redis.NewClient(opt)
-
-	inputUrl := "https://soumyadipmoni.vercel.app"
-	newUrl := "http://localhost/Avater"
-
-	err := rdb.Set(Ctx, newUrl, inputUrl, 0).Err()
-
-	if err != nil {
-		log.Error(err, "Current Domain", domain)
-		return nil
+func loadRedisDomain() {
+	if domain = os.Getenv("REDIS_DOMAIN"); domain == "" {
+		if err := godotenv.Load(".env"); err != nil {
+			log.Warn("Error: No .env file found")
+		}
+		domain = os.Getenv("REDIS_DOMAIN")
 	}
 
-	return rdb
+	if domain == "" {
+		log.Warn("Warning: REDIS_DOMAIN environment variable is not set")
+	}
 }
 
 func CreateCon() *redis.Client {
-	var cacheDomain = os.Getenv("REDIS_DOMAIN")
-
-	client := tryRedis(cacheDomain)
-
-	if client == nil {
-		log.Error("Connection Failed while trying to connect with Redis.")
-	} else {
-		log.Info("Connected to Redis Container!!")
+	if rdb != nil {
+		return rdb
 	}
 
-	return client
+	opt, err := redis.ParseURL(domain)
+	if err != nil {
+		log.Fatalf("Failed to parse Redis URL: %v", err)
+	}
+
+	rdb = redis.NewClient(opt)
+
+	err = rdb.Set(Ctx, "http://localhost/Avatar", "https://soumyadipmoni.vercel.app", 0).Err()
+	if err != nil {
+		log.Fatalf("Failed to set value in Redis: %v", err)
+	}
+
+	log.Info("Connected to Redis Container!")
+	return rdb
 }
