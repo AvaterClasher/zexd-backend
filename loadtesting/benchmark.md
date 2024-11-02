@@ -76,7 +76,39 @@ default ✓ [======================================] 1 VUs  30s
 ## Test 3
 
 The test script is [`test_url_create.js`](test_url_create.js). It creates a new URL and checks if the response status is 200.
-It was run by 1000 VU concurrently for 2 minutes.
+It was run by 100 VU concurrently for 2 minutes.
+
+The results are as follows:
+
+```bash
+execution: local
+        script: ./test_url_create.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 100 max VUs, 2m30s max duration (incl. graceful stop):
+              * default: 100 looping VUs for 2m0s (gracefulStop: 30s)
+
+
+
+     checks.........................: 100.00% 183464 out of 183464
+     http_req_duration..............: avg=65.25ms min=2.09ms med=36.52ms max=1.04s    p(90)=170.27ms p(95)=236.89ms
+     http_req_receiving.............: avg=80.94µs min=0s     med=0s      max=103.82ms p(90)=234.6µs  p(95)=532.59µs
+     http_req_sending...............: avg=21.07µs min=0s     med=0s      max=71.79ms  p(90)=0s       p(95)=0s
+     http_req_waiting...............: avg=65.15ms min=2.09ms med=36.43ms max=1.04s    p(90)=170.15ms p(95)=236.59ms
+     http_reqs......................: 183464  1527.771976/s
+     iteration_duration.............: avg=65.41ms min=2.28ms med=36.68ms max=1.04s    p(90)=170.42ms p(95)=237.02ms
+     iterations.....................: 183464  1527.771976/s
+     vus............................: 100     min=100              max=100
+
+
+running (2m00.1s), 000/100 VUs, 183464 complete and 0 interrupted iterations
+default ✓ [======================================] 100 VUs  2m0s
+```
+
+## Test 4
+
+The test script is [`test_url_redirect.js`](test_url_delete.js). It redirects to the original URL and checks if the response status is 302.
+It was run by 100 VU concurrently for 2 minutes.
 
 The results are as follows:
 
