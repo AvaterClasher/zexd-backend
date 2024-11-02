@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"time"
 	"zexd/logger"
 
 	"github.com/joho/godotenv"
@@ -59,6 +60,10 @@ func CreateCon() *sql.DB {
 	if db, err = sql.Open("postgres", connStr); err != nil {
 		log.Fatalf("Failed to open a connection: %s", err)
 	}
+
+	db.SetMaxOpenConns(30)
+	db.SetMaxIdleConns(30)
+	db.SetConnMaxIdleTime(5 * time.Minute)
 
 	if err = db.Ping(); err != nil {
 		log.Fatalf("Failed to ping the database: %s", err)
