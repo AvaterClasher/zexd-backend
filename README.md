@@ -10,6 +10,38 @@
 - Health monitoring with Prometheus and Grafana
 - API documentation via Swagger
 
+## Benchmarks
+
+The performance of ZEXD was tested using the [k6](https://k6.io/) load testing tool. The tests were run on a Lenovo Ideapad Flex 5 with an 11th Gen Intel Core i7 processor and 16GB of RAM.
+
+- Tests for Url Creation
+  - Test 1
+    - 1 VU for 30 seconds
+    - 14845 requests
+    - Avg. response time: 1.92ms
+  - Test 2
+    - 100 VU for 2 minutes
+    - 183464 requests
+    - Avg. response time: 65.25ms
+  - Test 3
+    - 200 VU for 2 minutes
+    - 356080 requests
+    - Avg. response time: 67.23ms
+
+- Tests for Url Redirection
+  - Test 1
+    - 1 VU for 30 seconds
+    - 10713 requests
+    - Avg. response time: 2.7ms
+  - Test 2
+    - 100 VU for 2 minutes
+    - 165830 requests
+    - Avg. response time: 72.03ms
+  - Test 3
+    - The server was not able to handle the load of 200 VUs for 2 mins.
+
+See the [benchmark results](loadtesting/benchmark.md) for the performance of ZexD.
+
 ## Prerequisites
 
 Make sure you have the following installed:
