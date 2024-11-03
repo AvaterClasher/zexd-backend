@@ -4,11 +4,11 @@
 
 ## Features
 
-- URL shortening and redirection
-- Click tracking and analytics
-- URL expiration management
-- Health monitoring with Prometheus and Grafana
-- API documentation via Swagger
+- URL shortening and redirection having a average response time of 2ms for creation and 1ms for redirection.
+- Click tracking and analytics for shortened URLs
+- URL expiration management (default: 24 hours)
+- Health monitoring with Prometheus and Grafana dashboards
+- API documentation via Swagger UI
 
 ## Benchmarks
 
@@ -17,26 +17,30 @@ The performance of ZEXD was tested using the [k6](https://k6.io/) load testing t
 - Tests for Url Creation
   - Test 1
     - 1 VU for 30 seconds
-    - 14845 requests
-    - Avg. response time: 1.92ms
+    - 16519 requests
+    - Avg. response time: 1.71ms
   - Test 2
     - 100 VU for 2 minutes
-    - 183464 requests
-    - Avg. response time: 65.25ms
+    - 253477 requests
+    - Avg. response time: 47.19ms
   - Test 3
     - 200 VU for 2 minutes
-    - 356080 requests
-    - Avg. response time: 67.23ms
+    - 330481 requests
+    - Avg. response time: 72.48ms
+  - Test 4
+    - 1000 VU for 2 minutes
+    - 324233 requests
+    - Avg. response time: 369.2ms
 
 - Tests for Url Redirection
   - Test 1
     - 1 VU for 30 seconds
-    - 10713 requests
-    - Avg. response time: 2.7ms
+    - 25053 requests
+    - Avg. response time: 1.09ms
   - Test 2
     - 100 VU for 2 minutes
-    - 165830 requests
-    - Avg. response time: 72.03ms
+    - 170563 requests
+    - Avg. response time: 12.39ms
   - Test 3
     - The server was not able to handle the load of 200 VUs for 2 mins.
 
