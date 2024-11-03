@@ -34,6 +34,6 @@ func RedirectHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "URL not found", http.StatusNotFound)
 		return
 	}
-	fmt.Fprintln(w, orgUrl)
-	// http.Redirect(w, r, orgUrl, http.StatusFound)
+	// fmt.Fprintln(w, orgUrl)
+	http.Redirect(w, r, orgUrl, http.StatusFound)
 }
