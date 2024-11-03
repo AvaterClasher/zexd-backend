@@ -1,9 +1,11 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"zexd/services"
+
 	"github.com/gorilla/mux"
 )
 
@@ -32,6 +34,6 @@ func RedirectHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "URL not found", http.StatusNotFound)
 		return
 	}
-
-	http.Redirect(w, r, orgUrl, http.StatusFound)
+	fmt.Fprintln(w, orgUrl)
+	// http.Redirect(w, r, orgUrl, http.StatusFound)
 }
