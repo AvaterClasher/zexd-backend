@@ -1,19 +1,19 @@
 package database
 
 import (
-	"database/sql"
+	"context"
 	"fmt"
 	"os"
-	"time"
 	"zexd/logger"
 
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 var (
-	log = logger.NewLogger()
-	db  *sql.DB
+	log    = logger.NewLogger()
+	db     *pgxpool.Pool
 	config = struct {
 		host, port, user, password, dbname, dbssl string
 	}{}
@@ -52,20 +52,15 @@ func initializeConfig() {
 	}
 }
 
-func CreateCon() *sql.DB {
+func CreateCon() *pgxpool.Pool {
 	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		config.host, config.port, config.user, config.password, config.dbname, config.dbssl)
 
 	var err error
-	if db, err = sql.Open("postgres", connStr); err != nil {
+	if db, err = pgxpool.New(context.Background(), connStr); err != nil {
 		log.Fatalf("Failed to open a connection: %s", err)
 	}
-
-	db.SetMaxOpenConns(30)
-	db.SetMaxIdleConns(30)
-	db.SetConnMaxIdleTime(5 * time.Minute)
-
-	if err = db.Ping(); err != nil {
+	if err = db.Ping(context.Background()); err != nil {
 		log.Fatalf("Failed to ping the database: %s", err)
 	}
 
