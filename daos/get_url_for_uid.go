@@ -1,6 +1,7 @@
 package daos
 
 import (
+	"context"
 	"encoding/base64"
 	"os"
 	"strconv"
@@ -32,7 +33,7 @@ func GetUrlsForUid(user_id string) ([]UrlData, error) {
 		SELECT uid, url, clicks 
 		FROM shortened_url 
 		WHERE user_id = $1`
-	rows, err := db.Query(query, user_id)
+	rows, err := db.Query(context.Background(),query, user_id)
 	if err != nil {
 		log.Errorf("Error retrieving URLs for user: %v", err)
 		return nil, err

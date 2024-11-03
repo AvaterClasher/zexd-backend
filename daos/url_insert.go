@@ -1,17 +1,18 @@
 package daos
 
 import (
-	"database/sql"
+	"context"
 	database "zexd/db"
 	"zexd/logger"
 	"zexd/model"
 
+	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/lib/pq"
 )
 
 var DB_NAME string
 var TABLE_NAME string
-var db *sql.DB
+var db *pgxpool.Pool
 
 var log = logger.NewLogger()
 
@@ -28,7 +29,7 @@ func init() {
 		)
 	`
 
-	_, err := db.Exec(createTableQuery)
+	_, err := db.Exec(context.Background(), createTableQuery)
 	if err != nil {
 		log.Fatalf("Error creating table: %v", err)
 	}
@@ -37,7 +38,7 @@ func init() {
 func InsertShortenedUrl(urlModel model.UrlModel) (int, error) {
 	var uid int
 	query := "INSERT INTO shortened_url (url,user_id,created_at,clicks) VALUES ($1,$2,NOW(),0) RETURNING uid"
-	err := db.QueryRow(query, urlModel.Url, urlModel.User_id).Scan(&uid)
+	err := db.QueryRow(context.Background(),query, urlModel.Url, urlModel.User_id).Scan(&uid)
 	if err != nil {
 		log.Errorf("Error inserting shortened URL: %v", err)
 		return 0, err
