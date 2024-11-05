@@ -28,7 +28,7 @@ func RedirectHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	orgUrl, err := services.UrlRedirection(shortenedUrl)
+	orgUrl, err := services.UrlRedirection(shortenedUrl,r)
 	if err != nil || orgUrl == "" {
 		log.Errorf("No matching URL found for redirection: %s", err)
 		http.Error(w, "URL not found", http.StatusNotFound)
