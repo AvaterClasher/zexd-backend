@@ -9,7 +9,7 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 
 	_ "github.com/AvaterClasher/zexd/docs"
-	middleware "github.com/AvaterClasher/zexd/middleware"
+	middleware "github.com/AvaterClasher/zexd/pkg/middleware"
 )
 
 type HistPrometheus struct {

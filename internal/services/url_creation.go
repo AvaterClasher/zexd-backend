@@ -5,9 +5,9 @@ import (
 	"os"
 	"strconv"
 	"time"
-	"github.com/AvaterClasher/zexd/cache"
-	"github.com/AvaterClasher/zexd/daos"
-	"github.com/AvaterClasher/zexd/model"
+	"github.com/AvaterClasher/zexd/pkg/cache"
+	"github.com/AvaterClasher/zexd/internal/daos"
+	"github.com/AvaterClasher/zexd/internal/model"
 
 	"github.com/redis/go-redis/v9"
 )

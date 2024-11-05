@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"github.com/AvaterClasher/zexd/services"
+	"github.com/AvaterClasher/zexd/internal/services"
 )
 
 type inputDelUrl struct {

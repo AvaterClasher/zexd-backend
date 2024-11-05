@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"net/http"
-	"github.com/AvaterClasher/zexd/logger"
+	"github.com/AvaterClasher/zexd/pkg/logger"
 )
 
 var log = logger.NewLoggerforHttp()

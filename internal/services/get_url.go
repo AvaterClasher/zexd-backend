@@ -2,10 +2,10 @@ package services
 
 import (
 	"encoding/base64"
-	"github.com/AvaterClasher/zexd/logger"
+	"github.com/AvaterClasher/zexd/pkg/logger"
 	"strconv"
 	"strings"
-	"github.com/AvaterClasher/zexd/daos"
+	"github.com/AvaterClasher/zexd/internal/daos"
 
 	"github.com/redis/go-redis/v9"
 )

@@ -1,7 +1,7 @@
 package services
 
 import (
-	"github.com/AvaterClasher/zexd/daos"
+	"github.com/AvaterClasher/zexd/internal/daos"
 )
 
 type UrlData = daos.UrlData

@@ -5,7 +5,7 @@ import (
 	"errors"
 	"strconv"
 	"strings"
-	"github.com/AvaterClasher/zexd/daos"
+	"github.com/AvaterClasher/zexd/internal/daos"
 )
 
 func UrlDelete(shortenedUrl string) error {
