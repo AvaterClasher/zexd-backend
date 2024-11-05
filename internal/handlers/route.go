@@ -94,6 +94,7 @@ func New() http.Handler {
 	mainRouter.HandleFunc("/api/create", CreateUrlHandler).Methods("POST", "OPTIONS")
 	mainRouter.HandleFunc("/api/delete", DeleteHandler).Methods("POST", "OPTIONS")
 	mainRouter.HandleFunc("/api/list/{user_id}", ListUrlsForUidHandler).Methods("GET", "OPTIONS")
+	mainRouter.HandleFunc("/api/list", ListMetaForLinksHandler).Methods("POST", "OPTIONS")
 
 	return route
 }
