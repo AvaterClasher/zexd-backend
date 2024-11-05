@@ -5,16 +5,24 @@ import (
 	"encoding/base64"
 	"strconv"
 	"time"
-
-	"github.com/AvaterClasher/zexd/internal/model"
 )
 
 type UrlWithMetadata struct {
-	Uid          int                   `json:"uid"`
-	URL          string                `json:"url"`
-	ShortenedUrl string                `json:"shortened_url"`
-	Clicks       int                   `json:"clicks"`
-	Metadata     []model.ClickMetadata `json:"metadata"`
+	Uid          int                 `json:"uid"`
+	URL          string              `json:"url"`
+	ShortenedUrl string              `json:"shortened_url"`
+	Clicks       int                 `json:"clicks"`
+	Metadata     []ClickWithMetadata `json:"metadata"`
+}
+
+type ClickWithMetadata struct {
+	Id              int       `json:"id"`
+	ClickedAt       time.Time `json:"clicked_at"`
+	IpAddress       string    `json:"ip_address"`
+	DeviceType      string    `json:"device_type"`
+	OperatingSystem string    `json:"operating_system"`
+	Referrer        string    `json:"referrer"`
+	Browser         string    `json:"browser"`
 }
 
 func GetUrlsAndMetadataForUser(userID string) ([]UrlWithMetadata, error) {
@@ -72,13 +80,15 @@ func GetUrlsAndMetadataForUser(userID string) ([]UrlWithMetadata, error) {
 				URL:          url,
 				ShortenedUrl: shortenedUrl,
 				Clicks:       clicks,
-				Metadata:     []model.ClickMetadata{},
+				Metadata:     []ClickWithMetadata{},
 			}
 			urlMap[uid] = urlData
 		}
+		metadataID := len(urlData.Metadata) + 1
 
 		if deviceType != nil && operatingSystem != nil {
-			urlData.Metadata = append(urlData.Metadata, model.ClickMetadata{
+			urlData.Metadata = append(urlData.Metadata, ClickWithMetadata{
+				Id:              metadataID,
 				DeviceType:      *deviceType,
 				OperatingSystem: *operatingSystem,
 				Referrer:        *referrer,
