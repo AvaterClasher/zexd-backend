@@ -1,18 +1,14 @@
 package services
 
 import (
-	"encoding/base64"
 	"errors"
-	"strconv"
-	"strings"
+
 	"github.com/AvaterClasher/zexd/internal/daos"
+	"github.com/AvaterClasher/zexd/internal/util"
 )
 
 func UrlDelete(shortenedUrl string) error {
-	encodedPart := shortenedUrl[strings.LastIndex(shortenedUrl, "/")+1:]
-	
-	byteNumber, _ := base64.StdEncoding.DecodeString(encodedPart)
-	uid, _ := strconv.Atoi(string(byteNumber))
+	uid, encodedPart := util.GetUid(shortenedUrl)
 
 	exists, err := rdb.Exists(ctx, encodedPart).Result()
 	if err != nil {
