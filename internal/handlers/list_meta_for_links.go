@@ -27,7 +27,7 @@ type MetaUrlResponse struct {
 // @Failure 400     {string} string "URL field is required"
 // @Failure 404     {string} string "URL does not exist"
 // @Failure 500     {string} string "Internal Server Error"
-// @Router /api/list/url [post]
+// @Router /api/list [post]
 func ListMetaForLinksHandler(w http.ResponseWriter, r *http.Request) {
 	var input inputListUrl
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
