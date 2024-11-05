@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"zexd/services"
+	"github.com/AvaterClasher/zexd/services"
 
 	"github.com/gorilla/mux"
 )

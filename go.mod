@@ -1,4 +1,4 @@
-module zexd
+module github.com/AvaterClasher/zexd
 
 go 1.23.2
 
@@ -6,6 +6,7 @@ require (
 	github.com/charmbracelet/lipgloss v0.13.1
 	github.com/charmbracelet/log v0.4.0
 	github.com/gorilla/mux v1.8.1
+	github.com/jackc/pgx/v5 v5.7.1
 	github.com/jasonlvhit/gocron v0.0.1
 	github.com/joho/godotenv v1.5.1
 	github.com/lib/pq v1.10.9
@@ -29,7 +30,6 @@ require (
 	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.7.1 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/klauspost/compress v1.17.9 // indirect
@@ -37,7 +37,6 @@ require (
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
-	github.com/muesli/reflow v0.3.0 // indirect
 	github.com/muesli/termenv v0.15.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect

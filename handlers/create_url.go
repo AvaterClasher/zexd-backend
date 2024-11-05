@@ -3,10 +3,10 @@ package handlers
 import (
 	"encoding/json"
 	"io"
-	"zexd/logger"
+	"github.com/AvaterClasher/zexd/logger"
 	"net/http"
 
-	"zexd/services"
+	"github.com/AvaterClasher/zexd/services"
 )
 
 var log = logger.NewLogger()

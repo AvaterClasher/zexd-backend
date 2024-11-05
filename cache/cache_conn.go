@@ -3,7 +3,7 @@ package cache
 import (
 	"context"
 	"os"
-	"zexd/logger"
+	"github.com/AvaterClasher/zexd/logger"
 
 	"github.com/joho/godotenv"
 	redis "github.com/redis/go-redis/v9"

@@ -8,8 +8,8 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 
-	_ "zexd/docs"
-	middleware "zexd/middleware"
+	_ "github.com/AvaterClasher/zexd/docs"
+	middleware "github.com/AvaterClasher/zexd/middleware"
 )
 
 type HistPrometheus struct {

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"zexd/logger"
+	"github.com/AvaterClasher/zexd/logger"
 	"net/http"
-	"zexd/handlers"
-	"zexd/services"
+	"github.com/AvaterClasher/zexd/handlers"
+	"github.com/AvaterClasher/zexd/services"
 
 	"github.com/jasonlvhit/gocron"
 )

@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"zexd/daos"
+	"github.com/AvaterClasher/zexd/daos"
 	"github.com/joho/godotenv"
 )
 

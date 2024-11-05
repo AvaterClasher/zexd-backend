@@ -2,9 +2,9 @@ package daos
 
 import (
 	"context"
-	database "zexd/db"
-	"zexd/logger"
-	"zexd/model"
+	database "github.com/AvaterClasher/zexd/db"
+	"github.com/AvaterClasher/zexd/logger"
+	"github.com/AvaterClasher/zexd/model"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/lib/pq"

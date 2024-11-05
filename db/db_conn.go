@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"zexd/logger"
+	"github.com/AvaterClasher/zexd/logger"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
