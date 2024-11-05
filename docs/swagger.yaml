@@ -1,9 +1,21 @@
 basePath: /
 definitions:
+  handlers.MetaUrlResponse:
+    properties:
+      metadata:
+        items:
+          $ref: '#/definitions/services.ClickMetadata'
+        type: array
+    type: object
   handlers.inputDelUrl:
     properties:
       url:
         description: URL to delete
+        type: string
+    type: object
+  handlers.inputListUrl:
+    properties:
+      url:
         type: string
     type: object
   handlers.inputUrl:
@@ -17,6 +29,25 @@ definitions:
     properties:
       shortened_url:
         type: string
+    type: object
+  services.ClickMetadata:
+    properties:
+      browser:
+        type: string
+      clicked_at:
+        type: string
+      device_type:
+        type: string
+      id:
+        type: integer
+      ip_address:
+        type: string
+      operating_system:
+        type: string
+      referrer:
+        type: string
+      url_uid:
+        type: integer
     type: object
 host: zexd.onrender.com
 info:
@@ -146,6 +177,40 @@ paths:
           schema:
             type: string
       summary: List URLs for a specific user ID
+      tags:
+      - urls
+  /api/list/url:
+    post:
+      consumes:
+      - application/json
+      description: Returns a list of Metadata for the specified Link
+      parameters:
+      - description: URL to fetch metadata for
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.inputListUrl'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Metadata for the specified URL
+          schema:
+            $ref: '#/definitions/handlers.MetaUrlResponse'
+        "400":
+          description: URL field is required
+          schema:
+            type: string
+        "404":
+          description: URL does not exist
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: List Metadata for a specific Link
       tags:
       - urls
   /health:

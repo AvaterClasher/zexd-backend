@@ -120,6 +120,58 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/list/url": {
+            "post": {
+                "description": "Returns a list of Metadata for the specified Link",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "urls"
+                ],
+                "summary": "List Metadata for a specific Link",
+                "parameters": [
+                    {
+                        "description": "URL to fetch metadata for",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.inputListUrl"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Metadata for the specified URL",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.MetaUrlResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "URL field is required",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "URL does not exist",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/list/{user_id}": {
             "get": {
                 "description": "Returns a list of URLs for the specified user ID",
@@ -224,11 +276,30 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "handlers.MetaUrlResponse": {
+            "type": "object",
+            "properties": {
+                "metadata": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/services.ClickMetadata"
+                    }
+                }
+            }
+        },
         "handlers.inputDelUrl": {
             "type": "object",
             "properties": {
                 "url": {
                     "description": "URL to delete",
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.inputListUrl": {
+            "type": "object",
+            "properties": {
+                "url": {
                     "type": "string"
                 }
             }
@@ -249,6 +320,35 @@ const docTemplate = `{
             "properties": {
                 "shortened_url": {
                     "type": "string"
+                }
+            }
+        },
+        "services.ClickMetadata": {
+            "type": "object",
+            "properties": {
+                "browser": {
+                    "type": "string"
+                },
+                "clicked_at": {
+                    "type": "string"
+                },
+                "device_type": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "ip_address": {
+                    "type": "string"
+                },
+                "operating_system": {
+                    "type": "string"
+                },
+                "referrer": {
+                    "type": "string"
+                },
+                "url_uid": {
+                    "type": "integer"
                 }
             }
         }
