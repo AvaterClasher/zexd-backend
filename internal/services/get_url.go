@@ -2,17 +2,19 @@ package services
 
 import (
 	"encoding/base64"
-	"github.com/AvaterClasher/zexd/pkg/logger"
+	"net/http"
 	"strconv"
 	"strings"
+
 	"github.com/AvaterClasher/zexd/internal/daos"
+	"github.com/AvaterClasher/zexd/pkg/logger"
 
 	"github.com/redis/go-redis/v9"
 )
 
 var log = logger.NewLogger()
 
-func UrlRedirection(shortenedUrl string) (string, error) {
+func UrlRedirection(shortenedUrl string, r *http.Request) (string, error) {
 	inputUrl, err := rdb.Get(ctx, shortenedUrl).Result()
 	if err == nil {
 		// log.Infof("Shortened URL found in cache: %s", inputUrl)
@@ -22,6 +24,9 @@ func UrlRedirection(shortenedUrl string) (string, error) {
 		go func() {
 			if dbErr := daos.IncrementClickCount(uid); dbErr != nil {
 				log.Errorf("Error incrementing click count: %s", dbErr)
+			}
+			if metaErr := RecordClick(uid, r); metaErr != nil {
+				log.Errorf("Error recording click metadata: %s", metaErr)
 			}
 		}()
 		return inputUrl, nil
