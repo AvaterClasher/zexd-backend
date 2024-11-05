@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/AvaterClasher/zexd/internal/model"
-	database "github.com/AvaterClasher/zexd/pkg/db"
-	"github.com/AvaterClasher/zexd/pkg/logger"
+	database "github.com/AvaterClasher/zexd/internal/db"
+	"github.com/AvaterClasher/zexd/internal/logger"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/lib/pq"

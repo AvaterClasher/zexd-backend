@@ -5,7 +5,7 @@ import (
 
 	"github.com/AvaterClasher/zexd/internal/daos"
 	"github.com/AvaterClasher/zexd/internal/util"
-	"github.com/AvaterClasher/zexd/pkg/logger"
+	"github.com/AvaterClasher/zexd/internal/logger"
 
 	"github.com/redis/go-redis/v9"
 )

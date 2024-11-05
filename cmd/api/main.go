@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/AvaterClasher/zexd/pkg/logger"
+	"github.com/AvaterClasher/zexd/internal/logger"
 	"net/http"
 	"github.com/AvaterClasher/zexd/internal/handlers"
 	"github.com/AvaterClasher/zexd/internal/services"
