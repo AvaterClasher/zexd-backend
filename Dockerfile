@@ -1,7 +1,7 @@
 FROM golang:1.23-alpine AS builder
 WORKDIR /app
 COPY . .
-RUN go build -o zexd .
+RUN go build -o zexd ./cmd/api
 
 FROM alpine:latest
 WORKDIR /app
