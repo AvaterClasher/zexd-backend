@@ -120,7 +120,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/list/url": {
+        "/api/list": {
             "post": {
                 "description": "Returns a list of Metadata for the specified Link",
                 "consumes": [
@@ -216,6 +216,50 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/list/{user_id}/all": {
+            "get": {
+                "description": "Returns all URLs and their associated metadata for a specific user ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "urls"
+                ],
+                "summary": "List all URLs and metadata for a user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of URLs with metadata",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/daos.UrlWithMetadata"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "User ID is required",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/health": {
             "get": {
                 "description": "Returns a message indicating the server is online",
@@ -276,6 +320,29 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "daos.UrlWithMetadata": {
+            "type": "object",
+            "properties": {
+                "clicks": {
+                    "type": "integer"
+                },
+                "metadata": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ClickMetadata"
+                    }
+                },
+                "shortened_url": {
+                    "type": "string"
+                },
+                "uid": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
         "handlers.MetaUrlResponse": {
             "type": "object",
             "properties": {
@@ -320,6 +387,35 @@ const docTemplate = `{
             "properties": {
                 "shortened_url": {
                     "type": "string"
+                }
+            }
+        },
+        "model.ClickMetadata": {
+            "type": "object",
+            "properties": {
+                "browser": {
+                    "type": "string"
+                },
+                "clicked_at": {
+                    "type": "string"
+                },
+                "device_type": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "ip_address": {
+                    "type": "string"
+                },
+                "operating_system": {
+                    "type": "string"
+                },
+                "referrer": {
+                    "type": "string"
+                },
+                "url_uid": {
+                    "type": "integer"
                 }
             }
         },
